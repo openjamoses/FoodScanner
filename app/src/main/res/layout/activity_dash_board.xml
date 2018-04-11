@@ -1,0 +1,171 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <include layout="@layout/include_toolbar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Action"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            card_view:cardBackgroundColor="#ccc"
+            card_view:cardCornerRadius="3dp"
+            android:elevation="5dp"
+            card_view:cardUseCompatPadding="true">
+            <RelativeLayout
+                android:id="@+id/layout_donate_food"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/button">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/donate_food"
+                    android:textColor="@color/cardview_light_background"
+                    android:textSize="25sp"
+                    android:typeface="serif"
+                    />
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            card_view:cardBackgroundColor="#ccc"
+            card_view:cardCornerRadius="3dp"
+            android:elevation="5dp"
+            card_view:cardUseCompatPadding="true">
+            <RelativeLayout
+                android:id="@+id/layout_volunteer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/button">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="25sp"
+                    android:textColor="@color/cardview_light_background"
+                    android:text="@string/volunteer"
+                    android:typeface="serif"
+                    />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            card_view:cardBackgroundColor="#ccc"
+            card_view:cardCornerRadius="3dp"
+            android:elevation="5dp"
+            card_view:cardUseCompatPadding="true">
+            <RelativeLayout
+                android:id="@+id/layout_map_a_location"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/button">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="@string/map_a_location"
+                    android:textColor="@color/cardview_light_background"
+                    android:textSize="25sp"
+                    android:typeface="serif"
+                    />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            card_view:cardBackgroundColor="#ccc"
+            card_view:cardCornerRadius="3dp"
+            android:elevation="5dp"
+            card_view:cardUseCompatPadding="true">
+            <RelativeLayout
+                android:id="@+id/layout_share"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:background="@drawable/button">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawableLeft="@android:drawable/ic_menu_share"
+                    android:text="@string/share_food_to_reduce_waste"
+                    android:textColor="@color/cardview_light_background"
+                    android:textSize="25sp"
+                    android:typeface="serif"
+                    />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_banner"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:textSize="18sp"
+            android:text="@string/banner_msg"
+            android:typeface="serif" />
+
+        </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "189337453856",
+    "firebase_url": "https://foodscanner-466e0.firebaseio.com",
+    "project_id": "foodscanner-466e0",
+    "storage_bucket": "foodscanner-466e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189337453856:android:d0b0d98895a2de3a",
+        "android_client_info": {
+          "package_name": "com.example.john.foodscanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189337453856-3gce6or3fnms0evarnr0172ue6ibfd6s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.john.foodscanner",
+            "certificate_hash": "bf2b9c3555833374de4f6bc9c04305022a7a69b4"
+          }
+        },
+        {
+          "client_id": "189337453856-8mih6be2d6bb06vom98l5drnomamnsd0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSFa4zp-vvDosT744v0VsdKeVFJcL3W_Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189337453856-8mih6be2d6bb06vom98l5drnomamnsd0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

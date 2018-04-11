@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20sp"
+    android:background="@mipmap/bg"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:drawableLeft="@android:drawable/editbox_background_normal"
+        android:text="@string/manual_food_entry"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:layout_marginTop="20sp"
+        android:drawableLeft="@android:drawable/ic_menu_info_details"
+        android:text="@string/scan_food_details"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:layout_marginTop="20sp"
+        android:drawableLeft="@android:drawable/ic_menu_share"
+        android:text="@string/share_food_to_reduce_waste"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:layout_marginTop="20sp"
+        android:drawableLeft="@android:drawable/ic_menu_day"
+        android:text="@string/expiry_date_manufacturry_date"/>
+</LinearLayout>
