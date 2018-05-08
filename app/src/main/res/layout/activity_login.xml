@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include layout="@layout/include_toolbar" />
 
@@ -23,15 +23,18 @@
         android:layout_margin="10dp"
         android:typeface="serif"
         android:layout_height="wrap_content" />
-    <EditText
-        android:id="@+id/edt_phone"
-        android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:maxLength="10"
-        android:inputType="phone"
-        android:hint="Enter mobile number"
-        android:typeface="serif"
-        android:layout_height="wrap_content" />
+        <net.rimoto.intlphoneinput.IntlPhoneInput
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:textSize="14sp"
+            app:textColor="#000000"
+            app:flagPaddingBottom="4dp"
+            app:flagPaddingEnd="4dp"
+            app:flagPaddingStart="4dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="20sp"
+            app:flagPaddingTop="4dp"
+            android:id="@+id/my_phone_input" />
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/chk_is_volunteer"

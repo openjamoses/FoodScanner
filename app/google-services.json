@@ -49,6 +49,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189337453856:android:4fa7d53bcdcea03e",
+        "android_client_info": {
+          "package_name": "com.example.john.rapezeroapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189337453856-8mih6be2d6bb06vom98l5drnomamnsd0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSFa4zp-vvDosT744v0VsdKeVFJcL3W_Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

@@ -1,5 +1,6 @@
 package com.example.john.foodscanner.firebase;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
@@ -63,7 +64,7 @@ public class SendNotification {
 
 
 
-    public void sendMultiplePush(final String title, final String message, final String image, final String users) {
+    public void sendMultiplePush(final String title, final String message, final String image, final String users, final ProgressDialog progressDialog) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, HOST_URL+URL_MULTIPLE_USERS,
                 new Response.Listener<String>() {
                     @Override
@@ -71,6 +72,15 @@ public class SendNotification {
                         //progressDialog.dismiss();
                         Log.e(TAG,response);
                        // Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                        try{
+                            if (progressDialog != null){
+                                if (progressDialog.isShowing()){
+                                    progressDialog.dismiss();
+                                }
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {

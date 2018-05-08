@@ -7,6 +7,7 @@ package com.example.john.foodscanner;
 public class Config {
 
     public static final String URL_PHONE = "http://192.168.43.18/";
+    public static final String URL_MODEM = "http://10.127.181.234/";
     public static final String URL_CAMTECH = "http://192.168.1.110/";
     public static final String URL_EMULATOR = "http://10.0.2.2/";
     public static final String URL_LOCAL = "http://127.0.0.1/";

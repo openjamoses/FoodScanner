@@ -39,6 +39,8 @@ import com.example.john.foodscanner.utils.FetchData;
 import com.example.john.foodscanner.utils.MyConstants;
 import com.example.john.foodscanner.utils.ServiceHandler;
 
+import net.rimoto.intlphoneinput.IntlPhoneInput;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,7 +69,7 @@ import static com.example.john.foodscanner.Config.USER_PHONE;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText edtName,edtPhone;
+    private EditText edtName;
     private boolean isVolunteer;
     private AppCompatCheckBox chkIsVolunteer;
     private String name,mobile;
@@ -80,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     private static int SPLASH_TIME_OUT = 2000;
     public static final int RequestPermissionCode = 1;
+    private IntlPhoneInput my_phone_input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 
         appSharedPreferences = new AppSharedPreferences(getApplicationContext());
         appSharedPreferences.saveStringPreferences(MyConstants.PREF_KEY_DEVICE_ID,deviceId);
+        my_phone_input = (IntlPhoneInput) findViewById(R.id.my_phone_input);
 
         findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,13 +126,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void doLogin() {
         name = edtName.getText().toString().trim();
-        mobile = edtPhone.getText().toString().trim();
-        if (isValidationSuccess()){
-            //doLoginTask();
-            doLoginTask2();
-            savePreferences();
+        mobile = my_phone_input.getNumber();
+        if (my_phone_input.isValid()){
+            if (!name.equals("")){
+                doLoginTask2();
+                savePreferences();
+            }
         }else {
-            //displayToast();
+            Toast.makeText(context,"Invalid phone number: "+my_phone_input.getNumber(),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -186,8 +191,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initView() {
         edtName = (EditText)findViewById(R.id.edt_name);
-        edtPhone = (EditText)findViewById(R.id.edt_phone);
-
         chkIsVolunteer = (AppCompatCheckBox)findViewById(R.id.chk_is_volunteer);
     }
 

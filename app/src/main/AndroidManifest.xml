@@ -79,6 +79,10 @@
             android:theme="@style/Theme.Design.NoActionBar"
             android:label="@string/share_food" />
 
+        <activity android:name=".activities.MessageActivity"
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:label="@string/messages" />
+
         <activity android:name=".activities.AvailableDonationsActivity"
             android:theme="@style/Theme.Design.NoActionBar"
             android:label="Available Donations" />

@@ -217,10 +217,14 @@ public class NotificationUtils {
                 }
             }
         } else {
-            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-            ComponentName componentInfo = taskInfo.get(0).topActivity;
-            if (componentInfo.getPackageName().equals(context.getPackageName())) {
-                isInBackground = false;
+            try {
+                List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+                ComponentName componentInfo = taskInfo.get(0).topActivity;
+                if (componentInfo.getPackageName().equals(context.getPackageName())) {
+                    isInBackground = false;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
 

@@ -4,22 +4,32 @@ package com.example.john.foodscanner.firebase;
  * Created by john on 8/31/17.
  */
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.john.foodscanner.Config;
+import com.example.john.foodscanner.R;
 import com.example.john.foodscanner.activities.LoginActivity;
 import com.example.john.foodscanner.activities.MainActivity;
+import com.example.john.foodscanner.activities.MessageActivity;
 import com.example.john.foodscanner.utils.Get_CurrentDateTime;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.example.john.foodscanner.Config.NOTIFICATION_ID;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -66,102 +76,74 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.e(TAG+": handleIntent", "Result: " + datas.toString());
             try{
                 JSONObject jsonObject = new JSONObject(datas);
-                String title = jsonObject.getString("title");
+                final String title = jsonObject.getString("title");
                 final String message = jsonObject.getString("message");
                 //boolean isBackground = data.getBoolean("is_background");
-                String imageUrl = jsonObject.getString("image");
-                String timestamp = new Get_CurrentDateTime().getCurrentDate()+","+new Get_CurrentDateTime().getCurrentTime();
+                final String imageUrl = jsonObject.getString("image");
+                final String timestamp = new Get_CurrentDateTime().getCurrentDate()+","+new Get_CurrentDateTime().getCurrentTime();
                 //JSONObject payload = data.getJSONObject("payload");
                 Log.e(TAG, "title: " + title);
                 Log.e(TAG, "message: " + message);
                 //// Log.e(TAG, "isBackground: " + isBackground);
                 ////Log.e(TAG, "payload: " + payload.toString());
                 Log.e(TAG, "imageUrl: " + imageUrl);
-                if (title.equals("share_all")){
-                    String[] splits = message.split("/");
-                    String body = splits[0];
-                    try{
-                        String name  = splits[1].split(":")[1];
-                        String title_ = splits[1].split(":")[2];
-                        String imei = name = splits[1].split(":")[3];
-
-                        Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
-                        resultIntent.putExtra("message", body);
-                        resultIntent.putExtra("name",name);
-                        resultIntent.putExtra("title",title_);
-                        resultIntent.putExtra("imei",imei);
 
 
-                        //// check for image attachment
-                        if (TextUtils.isEmpty(imageUrl)) {
-                            showNotificationMessage(getApplicationContext(), splits[0], body, timestamp, resultIntent);
-                            //new Custom(context).createNotify(splits[1],message);
-                        } else {
-                            // image is present, show notification with image
-                            showNotificationMessageWithBigImage(getApplicationContext(), splits[0], body, timestamp, resultIntent, imageUrl);
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
 
-                }else {
-
-                    String[] splits = title.split(":");
-                    String head = splits[0];
-                    String user = null;
-                    String id = null;
-                    if (splits.length>1){
-                        user = splits[1];
-                        id = splits[2];
-                    }
-                   if (NotificationUtils.isAppIsInBackground(getApplicationContext())) {
-                        //// app is in foreground, broadcast the push message
-                        // Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
-                        //pushNotification.putExtra("message", message);
-                        //LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
-
-                        //// play notification sound
-                        //NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-                        // notificationUtils.playNotificationSound();
-
-                        /** To be commented soon ****/
-
-                                // play notification sound
-                                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-                                notificationUtils.playNotificationSound();
+                        if (NotificationUtils.isAppIsInBackground(getApplicationContext())) {
 
 
-                                if (imageUrl != null || !imageUrl.equals("")){
-                                    // new Custom(context).create_(splits[1],message,imageUrl);
-                                }else {
-                                    //new Custom(context).createNotify(splits[1],message);
-                                }
+                            // play notification sound
+                            NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+                            notificationUtils.playNotificationSound();
 
 
-                                Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
-                                resultIntent.putExtra("message", message);
-                                resultIntent.putExtra("id",splits[2]);
-                                resultIntent.putExtra("name",splits[1]);
-                                resultIntent.putExtra("category_id","category");
-
-                                //// check for image attachment
-                                if (TextUtils.isEmpty(imageUrl)) {
-                                    showNotificationMessage(getApplicationContext(), splits[0], message, timestamp, resultIntent);
-                                   // new Custom(context).createNotify(splits[1],message);
-                                } else {
-
-                                    // image is present, show notification with image
-                                    showNotificationMessageWithBigImage(getApplicationContext(), splits[0], message, timestamp, resultIntent, imageUrl);
-                                }
 
 
+                            Intent resultIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                            resultIntent.putExtra("message", message);
+
+                            //// check for image attachment
+                            if (TextUtils.isEmpty(imageUrl)) {
+                                showNotificationMessage(getApplicationContext(), title, message, timestamp, resultIntent);
+                                // new Custom(context).createNotify(splits[1],message);
+                            } else {
+
+                                // image is present, show notification with image
+                                showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, resultIntent, imageUrl);
                             }
 
 
-                   // } else {
-                        // app is in background, show the notification in notification tray
+                        }else {
+                            // play notification sound
+                            NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+                            notificationUtils.playNotificationSound();
+
+
+
+
+                            Intent resultIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                            resultIntent.putExtra("message", message);
+
+                            //// check for image attachment
+                            if (TextUtils.isEmpty(imageUrl)) {
+                                showNotificationMessage(getApplicationContext(), title, message, timestamp, resultIntent);
+                                // new Custom(context).createNotify(splits[1],message);
+                            } else {
+
+                                // image is present, show notification with image
+                                showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, resultIntent, imageUrl);
+                            }
+                        }
+
 
                     }
+                });
+
+
 
             }catch (Exception e){
                 e.printStackTrace();
@@ -182,7 +164,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
             // play notification sound
             NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-            //notificationUtils.playNotificationSound();
+            notificationUtils.playNotificationSound();
         }else{
             // If the app is in background, firebase itself handles the notification
         }
@@ -191,114 +173,38 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.e(TAG, "push json: " + json.toString());
         try {
             JSONObject data = json.getJSONObject("data");
-            String title = data.getString("title");
+            final String title = data.getString("title");
             final String message = data.getString("message");
             //boolean isBackground = data.getBoolean("is_background");
-            String imageUrl = data.getString("image");
-            String timestamp = new Get_CurrentDateTime().getCurrentDate()+","+new Get_CurrentDateTime().getCurrentTime();
+            final String imageUrl = data.getString("image");
+            final String timestamp = new Get_CurrentDateTime().getCurrentDate()+","+new Get_CurrentDateTime().getCurrentTime();
             //JSONObject payload = data.getJSONObject("payload");
-
             Log.e(TAG, "title: " + title);
             Log.e(TAG, "message: " + message);
-            //// Log.e(TAG, "isBackground: " + isBackground);
-            ////Log.e(TAG, "payload: " + payload.toString());
-            Log.e(TAG, "imageUrl: " + imageUrl);
-            if (title.equals("share_all")){
-                String[] splits = message.split("/");
-                String body = splits[0];
 
-                Toast.makeText(context,body,Toast.LENGTH_SHORT).show();
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                public void run() {
+                    NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+                    notificationUtils.playNotificationSound();
 
-                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-                notificationUtils.playNotificationSound();
-
-                try{
-                    String name  = splits[1].split(":")[1];
-                    String title_ = splits[1].split(":")[2];
-                    String imei = name = splits[1].split(":")[3];
-
-                    Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    resultIntent.putExtra("message", body);
-                    resultIntent.putExtra("name",name);
-                    resultIntent.putExtra("title",title_);
-                    resultIntent.putExtra("imei",imei);
-
-
-                    //// check for image attachment
-                     if (TextUtils.isEmpty(imageUrl)) {
-                         showNotificationMessage(getApplicationContext(), splits[0], body, timestamp, resultIntent);
+                    Toast.makeText(context, message,Toast.LENGTH_SHORT).show();
+                    showNotifications(title,message);
+                    Intent resultIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                    resultIntent.putExtra("message", message);
+                    if (TextUtils.isEmpty(imageUrl)) {
+                        showNotificationMessage(getApplicationContext(), title, message, timestamp, resultIntent);
                         //new Custom(context).createNotify(splits[1],message);
-                      } else {
-                         // image is present, show notification with image
-                         showNotificationMessageWithBigImage(getApplicationContext(), splits[0], body, timestamp, resultIntent, imageUrl);
-                      }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-
-            }else {
-                String[] splits = title.split(":");
-                String head = splits[0];
-                String user = null;
-                String id = null;
-                if (splits.length>1){
-                    user = splits[1];
-                    id = splits[2];
-                }
-                if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
-                    //// app is in foreground, broadcast the push message
-                   // Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
-                    //pushNotification.putExtra("message", message);
-                    //LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
-
-                    //// play notification sound
-                    //NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-                   // notificationUtils.playNotificationSound();
-
-                    /** To be commented soon ****/
-                    if(!user.equals(null)){
-                        if (user.equals("users")){
-
-                            //// check for image attachment
-                           // if (TextUtils.isEmpty(imageUrl)) {
-                                //showNotificationMessage(getApplicationContext(), splits[0], message, timestamp, resultIntent);
-                                //new Custom(context).createNotify(splits[1],message);
-                            //} else {
-
-                                // image is present, show notification with image
-                               // showNotificationMessageWithBigImage(getApplicationContext(), splits[0], message, timestamp, resultIntent, imageUrl);
-                            //}
-
-                           // if (imageUrl != null || !imageUrl.equals("")){
-                             //   new Custom(context).create_(splits[1],message,imageUrl);
-                            //}else {
-                                //new Custom(context).createNotify(splits[1],message);
-                           // }
-
-                        }else {
-
-                            if (imageUrl != null || !imageUrl.equals("")){
-                               // new Custom(context).create_(splits[1],message,imageUrl);
-                            }else {
-                                //new Custom(context).createNotify(splits[1],message);
-                            }
-                             //// check for image attachment
-                           // if (TextUtils.isEmpty(imageUrl)) {
-                                //showNotificationMessage(getApplicationContext(), splits[0], message, timestamp, resultIntent);
-                                //new Custom(context).createNotify(splits[1],message);
-                            //} else {
-                                // image is present, show notification with image
-                                //showNotificationMessageWithBigImage(getApplicationContext(), splits[0], message, timestamp, resultIntent, imageUrl);
-                            //}
-                        }
+                    } else {
+                        // image is present, show notification with image
+                        showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, resultIntent, imageUrl);
                     }
-
-                } else {
-                    // app is in background, show the notification in notification tray
-
+                    //Toast.makeText(context, "Your message to main thread", Toast.LENGTH_SHORT).show();
                 }
-            }
+            });
+
+
+
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());
         } catch (Exception e) {
@@ -323,4 +229,24 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         notificationUtils.showNotificationMessage(title, message, timeStamp, intent, imageUrl);
     }
+
+    private void showNotifications(String title, String msg) {
+        Intent i = new Intent(this, MessageActivity.class);
+        i.putExtra("title",title);
+        i.putExtra("message",msg);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 2,
+                i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentText(msg)
+                .setContentTitle(title)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .build();
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.notify(NOTIFICATION_ID, notification);
+    }
+
 }
